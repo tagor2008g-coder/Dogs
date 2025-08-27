@@ -1,5 +1,5 @@
 import requests
-from tkinter import Tk, Toplevel, messagebox
+from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from io import BytesIO
@@ -29,14 +29,11 @@ def show_image():
 
             tab = ttk.Frame(notebook)
             notebook.add(tab, text=f"Изображение {notebook.index('end') + 1}")
-
-            #new_window = Toplevel(window)
-            #new_window.title("Случайное изображение пёсика")
-            label = ttk.Label(new_window, image=img)
+            label = ttk.Label(tab, image=img)
             label.image = img
             label.pack(padx=10, pady=10)
 
-        except requests.RequestException as e:
+        except Exception as e:
             messagebox.showerror("Ошибка", f"Не удалось загрузить изображение: {e}")
 
 def start_progress():
@@ -53,19 +50,17 @@ button.pack(padx=10, pady=10)
 progress = ttk.Progressbar(window, mode='determinate', length=300)
 progress.pack(padx=10, pady=5)
 
-
-# Ширина
-width_label = ttk.Label(text="Ширина:")
+width_label = ttk.Label(window, text="Ширина:")
 width_label.pack(side='left', padx=(10, 0))
-width_spinbox = ttk.Spinbox(from_=200, to=500, increment=50, width=5)
+width_spinbox = ttk.Spinbox(window, from_=200, to=500, increment=50, width=5)
 width_spinbox.pack(side='left', padx=(0, 10))
+width_spinbox.set(300)
 
-# Высота
-height_label = ttk.Label(text="Высота:")
+height_label = ttk.Label(window, text="Высота:")
 height_label.pack(side='left', padx=(10, 0))
-height_spinbox = ttk.Spinbox(from_=200, to=500, increment=50, width=5)
+height_spinbox = ttk.Spinbox(window, from_=200, to=500, increment=50, width=5)
 height_spinbox.pack(side='left', padx=(0, 10))
-
+height_spinbox.set(300)
 # Создаем отдельное окно для Notebook
 top_level_window = Toplevel(window)
 top_level_window.title("Изображения пёсиков")
@@ -74,6 +69,8 @@ notebook = ttk.Notebook(top_level_window)
 notebook.pack(expand=True, fill='both', padx=10, pady=10)
 
 window.mainloop()
+
+
 
 
 
