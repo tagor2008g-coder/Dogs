@@ -27,8 +27,11 @@ def show_image():
             img.thumbnail(img_size)
             img = ImageTk.PhotoImage(img)
 
-            new_window = Toplevel(window)
-            new_window.title("Случайное изображение пёсика")
+            tab = ttk.Frame(notebook)
+            notebook.add(tab, text=f"Изображение {notebook.index('end') + 1}")
+
+            #new_window = Toplevel(window)
+            #new_window.title("Случайное изображение пёсика")
             label = ttk.Label(new_window, image=img)
             label.image = img
             label.pack(padx=10, pady=10)
@@ -63,30 +66,15 @@ height_label.pack(side='left', padx=(10, 0))
 height_spinbox = ttk.Spinbox(from_=200, to=500, increment=50, width=5)
 height_spinbox.pack(side='left', padx=(0, 10))
 
+# Создаем отдельное окно для Notebook
+top_level_window = Toplevel(window)
+top_level_window.title("Изображения пёсиков")
 
-def show_image():
-    try:
-        # Получаем значения и удаляем возможные пробелы
-        width_str = width_spinbox.get().strip()
-        height_str = height_spinbox.get().strip()
-
-        # Проверяем, что строки не пустые
-        if not width_str or not height_str:
-            raise ValueError("Поля ширины и высоты не могут быть пустыми")
-
-        # Преобразуем в целые числа
-        width = int(width_str)
-        height = int(height_str)
-
-        # Теперь можно использовать width и height
-        img_size = (width, height)
-        # ... остальной код ...
-
-    except ValueError as e:
-        # Обрабатываем ошибку: показываем сообщение пользователю
-        messagebox.showerror("Ошибка ввода", f"Некорректный ввод: {e}. Введите целые числа.")
+notebook = ttk.Notebook(top_level_window)
+notebook.pack(expand=True, fill='both', padx=10, pady=10)
 
 window.mainloop()
+
 
 
 
